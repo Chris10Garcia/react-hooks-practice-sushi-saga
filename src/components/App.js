@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import SushiContainer from "./SushiContainer";
 import Table from "./Table";
+import AddMoreMoney from "./AddMoreMoney";
 
 const API = "http://localhost:3001/sushis";
+
 
 function App() {
 
@@ -28,6 +30,9 @@ function App() {
   }
 
 
+  function addCash(cash){
+    setMoney((money) => money + parseInt(cash))
+  }
 
   async function removeSushi(id){
     await fetch(API + "/" + id,{
@@ -48,8 +53,11 @@ function App() {
   
   return (
     <div className="app">
+      
       <SushiContainer setMoney={setMoney} money={money} sushiList={sushiList} requestMore={requestMore} removeSushi={removeSushi}/>
-      <Table money={money} plates={plates} />
+      
+      <Table money={money} plates={plates}/>
+      <AddMoreMoney addCash={addCash}/>
     </div>
   );
 }
