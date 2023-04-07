@@ -1,17 +1,21 @@
 import React from "react";
 
-function Sushi({sushi, removeSushi}) {
-  const {name, img_url, price, id} = sushi
+function Sushi({sushi, removeSushi, setMoney, money}) {
+  const {name, img_url, price, eaten, id} = sushi
 
   function handleOnClickRemoveImg(){
-    removeSushi(id)
+    const cashLeft = money - price
+    if (!eaten && cashLeft >= 0 ) {
+      removeSushi(id)
+      setMoney(cashLeft)
+    }
   }
 
   return (
     <div className="sushi">
-      <div className="plate" onClick={handleOnClickRemoveImg}>
+      <div className="plate" onClick={handleOnClickRemoveImg} style = {{pointerEvents : "auto"}}>
         {/* Tell me if this sushi has been eaten! */}
-        {!img_url ? null : (
+        {eaten ? null : (
           <img
             src={img_url}
             alt={name}
